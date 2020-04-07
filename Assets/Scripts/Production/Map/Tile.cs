@@ -9,6 +9,8 @@ public class Tile : ScriptableObject
     public GameObject prefabToSpawn;
     public bool isWalkable;
     public float displacement;
+    public bool isStartTile;
+    public bool isEndTile;
 
     //public TileData CreateTileData(Vector2Int position)
     //{

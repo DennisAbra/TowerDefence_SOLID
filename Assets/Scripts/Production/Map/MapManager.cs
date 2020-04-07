@@ -13,6 +13,12 @@ public class MapManager : MonoBehaviour
 
     int[,] map;
 
+
+    public List<Vector2Int> WalkableTiles { get; private set; }
+    public Vector2Int EndTile { get; private set; }
+    public Vector2Int StartTile { get; private set; }
+    public Vector2Int[] WaveData { get; private set; }
+
     void Awake()
     {
         if (parent == null)
@@ -30,15 +36,17 @@ public class MapManager : MonoBehaviour
             spawner = GetComponent<MapSpawner>();
         }
 
-        map = mapReader.ReadLevelMap(mapToRead);
+        (map, WaveData) = mapReader.ReadMap(mapToRead);
 
        // int numOfDimension = map.Rank;
         for (int y = 0; y < map.GetLength(1); y++)
         {
             for (int x = 0; x < map.GetLength(0); x++)
             {
-                spawner.SpawnTile(x, y, map[x, y], tiles, parent);
+                WalkableTiles = spawner.SpawnTile(x, y, map[x, y], tiles, parent);
             }
         }
+        EndTile = spawner.EndTile;
+        StartTile = spawner.StartTile;
     }
 }

@@ -4,25 +4,34 @@ using UnityEngine;
 
 public class MapSpawner : MonoBehaviour
 {
-    private List<Vector3> walkableTiles = new List<Vector3>();
+    private List<Vector2Int> walkableTiles = new List<Vector2Int>();
 
-    public List<Vector3> WalkableTiles{ get; private set; }
+    public Vector2Int EndTile { get; private set; }
+    public Vector2Int StartTile { get; private set; }
 
-    public void SpawnTile(int x, int y, int value, Tile[] tiles, Transform parent)
+    public List<Vector2Int> SpawnTile(int x, int y, int value, Tile[] tiles, Transform parent)
     {
-        foreach(Tile t in tiles)
+        foreach (Tile t in tiles)
         {
-            if((int)t.tileType == value)
+            if ((int)t.tileType == value)
             {
                 Vector3 newPos = Vector3.right * x * t.displacement + Vector3.forward * y * t.displacement;
                 Instantiate(t.prefabToSpawn, newPos, Quaternion.identity, parent.transform);
-                if(t.isWalkable)
+                if (t.isWalkable)
                 {
-                  //  Debug.Log(newPos);
-                    walkableTiles.Add(newPos);
+                    walkableTiles.Add(new Vector2Int(x,y));
+
+                    if ((int)t.tileType == value && value == (int)TypeOfTile.StartTile)
+                    {
+                        StartTile = new Vector2Int(x,y);
+                    }
+                    if ((int)t.tileType == value && value == (int)TypeOfTile.EndTile)
+                    {
+                        EndTile = new Vector2Int(x, y);
+                    }
                 }
             }
         }
-        WalkableTiles = walkableTiles;
+        return walkableTiles;
     }
 }

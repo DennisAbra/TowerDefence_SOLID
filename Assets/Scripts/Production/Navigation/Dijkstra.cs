@@ -8,71 +8,52 @@ namespace AI
     //TODO: Implement IPathFinder using Dijsktra algorithm.
     public class Dijkstra : IPathFinder
     {
-        private List<Vector2Int> grid = new List<Vector2Int>();
-        private Queue<Vector2Int> frontier = new Queue<Vector2Int>();
+        private HashSet<Vector2Int> accessible;
 
-        private Dictionary<Vector2Int, Vector2Int> ancestors = new Dictionary<Vector2Int, Vector2Int>();
-        private List<Vector2Int> neighbours = new List<Vector2Int>();
-
-        private Vector2Int currentNode;
-        private List<Vector2Int> path = new List<Vector2Int>();
-
-        public Dijkstra(List<Vector2Int> accessibleNodes)
+        public Dijkstra(IEnumerable<Vector2Int> accessibleNodes)
         {
-            grid = accessibleNodes;
+            accessible = new HashSet<Vector2Int>(accessibleNodes);
         }
 
         public IEnumerable<Vector2Int> FindPath(Vector2Int start, Vector2Int goal)
         {
-            currentNode = start;
-            frontier.Enqueue(currentNode);
+            Dictionary<Vector2Int, Vector2Int?> ancestors = new Dictionary<Vector2Int, Vector2Int?>();
+            Queue<Vector2Int> positionsToEvaluate = new Queue<Vector2Int>();
 
-            while (frontier.Count > 0)
+            Vector2Int current = start;
+
+            ancestors.Add(current, null);
+            positionsToEvaluate.Enqueue(current);
+
+            // Loop through all accessible tiles
+            while (positionsToEvaluate.Count > 0)
             {
-                currentNode = frontier.Dequeue();
-                if (currentNode == goal)
-                {
-                    break;
-                }
+                current = positionsToEvaluate.Dequeue();
+                if (current == goal)
+                { break; }
 
-                foreach (Vector2Int n in GetNeighbours())
+                foreach (Vector2Int dir in Tools.DirectionTools.Dirs)
                 {
-                    if (grid.Contains(n))
+                    Vector2Int test = current + dir;
+                    if (accessible.Contains(test) && !ancestors.ContainsKey(test))
                     {
-                        if (!ancestors.ContainsKey(n))
-                        {
-                            frontier.Enqueue(n);
-                            ancestors.Add(n, currentNode);
-                        }
+                        positionsToEvaluate.Enqueue(test);
+                        ancestors.Add(test, current);
                     }
                 }
             }
 
-            if (!ancestors.ContainsKey(goal))
-            {
-                return null;
-            }
-
             if (ancestors.ContainsKey(goal))
             {
-                foreach (KeyValuePair<Vector2Int, Vector2Int> a in ancestors)
+                List<Vector2Int> path = new List<Vector2Int>();
+                for (Vector2Int? step = ancestors[goal]; step != null; step = ancestors[step.Value])
                 {
-                    path.Add(a.Value);
+                    path.Add(step.Value);
                 }
+                path.Reverse();
+                return path;
             }
-            path.Reverse();
-            return path;
+            return accessible;
         }
-
-        List<Vector2Int> GetNeighbours()
-        {
-            neighbours.Clear();
-            neighbours.Add(currentNode + Vector2Int.up);
-            neighbours.Add(currentNode + Vector2Int.right);
-            neighbours.Add(currentNode + Vector2Int.down);
-            neighbours.Add(currentNode + Vector2Int.left);
-            return neighbours;
-        }
-
     }
 }

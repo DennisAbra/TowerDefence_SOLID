@@ -1,32 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AI;
+
 
 public class PathAgent : MonoBehaviour
 {
-    static List<Vector3> walkablePositions;
-    public GameObject prefab;
+    int currentIndex = 0;
+    public float speed = 1;
+    Animator animator;
+    float t = 0;
 
     void Start()
     {
-        //Gets all walkable tiles in order. 
-        //Start on the first element End on the last
-        walkablePositions = FindObjectOfType<MapSpawner>().WalkableTiles;
-
+        animator = GetComponent<Animator>();
+        transform.position = UnitManager.walkablePositions[currentIndex];
+        animator.SetBool("isWalking", true);
     }
 
-    Vector3 CalculateNextTile(Vector3Int currentPos)
+    void Update()
     {
-        //Find next tile to move to
-        int indexOfNextTile = walkablePositions.IndexOf(currentPos) + 1;
+        
+        t += Time.deltaTime * speed;
+        transform.position = Vector3.Lerp(UnitManager.walkablePositions[currentIndex], UnitManager.walkablePositions[currentIndex+1], t);
+        if(t > 1)
+        {
+            if (UnitManager.walkablePositions[currentIndex+2] != null)
+            currentIndex++;
+            t = 0;
+            //Spawn next enemy in line
+        }
 
-        return walkablePositions[indexOfNextTile];
-    }
-
-    void MoveToNextTile()
-    {
-        //Check if next tile is occupied.
-        // if not move to it
     }
 
 }

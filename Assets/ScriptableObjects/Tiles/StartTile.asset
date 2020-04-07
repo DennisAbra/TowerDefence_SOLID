@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: StartTile
   m_EditorClassIdentifier: 
   tileType: 8
-  prefabToSpawn: {fileID: 8446340793006353421, guid: 3445e6bc04d6d478291c03e5d82bb4fc,
+  prefabToSpawn: {fileID: 8446340793006353421, guid: 1405f561129412a4bab679c93510cba4,
     type: 3}
   isWalkable: 1
   displacement: 2
+  isStartTile: 1
+  isEndTile: 0

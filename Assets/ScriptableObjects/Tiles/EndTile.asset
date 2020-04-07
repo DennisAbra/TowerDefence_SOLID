@@ -17,3 +17,5 @@ MonoBehaviour:
     type: 3}
   isWalkable: 1
   displacement: 2
+  isStartTile: 0
+  isEndTile: 1

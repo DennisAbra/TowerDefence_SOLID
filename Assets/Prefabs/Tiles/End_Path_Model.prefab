@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2faa8697a39564a5eb0967973784eee7, type: 2}
+  - {fileID: 2100000, guid: a5e89a6e2322d4ca3871f8cfa39fbaa0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3062967066264252549}
   m_Layer: 0
-  m_Name: Tile_Path_Model
+  m_Name: End_Path_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
