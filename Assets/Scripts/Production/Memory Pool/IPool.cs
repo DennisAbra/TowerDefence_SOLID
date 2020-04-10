@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Tools
 {
@@ -8,83 +8,45 @@ namespace Tools
         T Rent(bool returnActive);
     }
 
-    public class ComponentPool<T> : IPool<T> where T : Component
-    {
-        uint m_ExpandBy;
-        private T m_Prefab;
-        Transform m_parent;
-
-        private Stack<T> m_Objects;
-
-        public ComponentPool(uint initSize, T prefab, uint expandBy = 1, Transform parent = null)
-        {
-            m_Prefab = prefab;
-            m_ExpandBy = expandBy;
-            m_parent = parent;
-
-            Expand((uint)Mathf.Max(1,initSize));
-        }
-
-        void Expand(uint expandBy)
-        {
-            for(int i = 0; i < expandBy; i++)
-            {
-                T instance = Object.Instantiate<T>(m_Prefab, m_parent);
-                instance.gameObject.AddComponent<ListenOnDisable>().OnDisableGameObject += UnRent;
-                m_Objects.Push(instance);
-            }
-        }
-
-        void UnRent(GameObject gameObj)
-        {
-            m_Objects.Push(gameObj.GetComponent<T>());
-        }
-
-        public T Rent(bool returnActive)
-        {
-            if(m_Objects.Count == 0)
-            {
-                Expand(m_ExpandBy);
-            }
-
-            T instance = m_Objects.Pop();
-            instance.gameObject.SetActive(returnActive);
-
-            return instance;
-        }
-    }
+    // public class ComponentPool<T> : IPool<T> where T : Component
+    // {
+    //     public T Rent(bool returnActive)
+    //     {
+    //         
+    //     }
+    // }
 
     public class GameObjectPool : IPool<GameObject>
     {
-        uint m_ExpandBy;
-        GameObject m_prefab;
-        Transform m_parent;
+        private readonly uint m_ExpandBy;
+        private readonly GameObject m_Prefab;
+        private readonly Transform m_Parent;
 
-        Stack<GameObject> m_Objects = new Stack<GameObject>();
+        readonly Stack<GameObject> m_Objects = new Stack<GameObject>();
 
-        public GameObjectPool(uint InitSize, GameObject prefab, uint expandBy = 1, Transform parent = null)
+        public GameObjectPool(uint initSize, GameObject prefab, uint expandBy = 1, Transform parent = null)
         {
-            m_prefab = prefab;
             m_ExpandBy = (uint)Mathf.Max(1, expandBy);
-            m_parent = parent;
-            m_prefab.SetActive(false);
-            Expand((uint)Mathf.Max(1, InitSize));
+            m_Prefab = prefab;
+            m_Parent = parent;
+            m_Prefab.SetActive(false);
+            Expand((uint)Mathf.Max(1, initSize));
         }
 
         private void Expand(uint amount)
         {
             for (int i = 0; i < amount; i++)
             {
-                GameObject instance = Object.Instantiate(m_prefab, m_parent);
-                ListenOnDisable listenOnDisable = instance.AddComponent<ListenOnDisable>();
-                listenOnDisable.OnDisableGameObject += UnRent;
+                GameObject instance = Object.Instantiate(m_Prefab, m_Parent);
+                EmitOnDisable emitOnDisable = instance.AddComponent<EmitOnDisable>();
+                emitOnDisable.OnDisableGameObject += UnRent;
                 m_Objects.Push(instance);
             }
         }
 
-        void UnRent(GameObject gameObj)
+        private void UnRent(GameObject gameObject)
         {
-            m_Objects.Push(gameObj);
+            m_Objects.Push(gameObject);
         }
 
         public GameObject Rent(bool returnActive)
@@ -93,7 +55,6 @@ namespace Tools
             {
                 Expand(m_ExpandBy);
             }
-
             GameObject instance = m_Objects.Pop();
             instance.SetActive(returnActive);
             return instance;

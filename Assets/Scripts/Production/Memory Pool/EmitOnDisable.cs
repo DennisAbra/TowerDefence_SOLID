@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ListenOnDisable : MonoBehaviour
+public class EmitOnDisable : MonoBehaviour
 {
     public event Action<GameObject> OnDisableGameObject;
 

@@ -139,14 +139,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4deb71105cdf0488058a3449a68ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 745584154}
   speed: 0.1
---- !u!1 &745584154 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3358623668250692056, guid: 116fda0e5defb46aba819fdb1f4ec0bf,
-    type: 3}
-  m_PrefabInstance: {fileID: 796088012}
+--- !u!114 &81453855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81453851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ad00d05e9481d4cab6673c16208018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallUnit: {fileID: 3358623668188840345, guid: 116fda0e5defb46aba819fdb1f4ec0bf,
+    type: 3}
+  largeUnit: {fileID: 3358623668188840345, guid: 690f5f88c18c8074f99e1a9fef8d6a9a,
+    type: 3}
+  poolSize: 5
 --- !u!1001 &796088012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,6 +223,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy_Model (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358623668188840345, guid: 116fda0e5defb46aba819fdb1f4ec0bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 116fda0e5defb46aba819fdb1f4ec0bf, type: 3}

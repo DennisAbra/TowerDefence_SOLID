@@ -51,6 +51,7 @@ namespace AI
                     path.Add(step.Value);
                 }
                 path.Reverse();
+                path.Add(goal);
                 return path;
             }
             return accessible;
