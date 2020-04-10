@@ -31,6 +31,7 @@ public class MapManager : MonoBehaviour
         {
             mapReader = new MapReader();
         }
+
         if(spawner == null)
         {
             spawner = GetComponent<MapSpawner>();
@@ -38,7 +39,6 @@ public class MapManager : MonoBehaviour
 
         (map, WaveData) = mapReader.ReadMap(mapToRead);
 
-       // int numOfDimension = map.Rank;
         for (int y = 0; y < map.GetLength(1); y++)
         {
             for (int x = 0; x < map.GetLength(0); x++)

@@ -4,16 +4,15 @@ using UnityEngine;
 using AI;
 
 
-public class PathAgent : MonoBehaviour
+public class PathAgent : MonoBehaviour, IMover, IReuseable
 {
     int currentIndex = 0;
-     float speed = 10;
     Animator animator;
     float t = 0;
 
-    public float Speed { get; private set; }
+    public float Speed { get; set; }
 
-    void OnEnable()
+    public void Reset()
     {
         if (!animator)
         {
@@ -22,19 +21,18 @@ public class PathAgent : MonoBehaviour
         if (UnitManager.walkablePositions != null)
             transform.position = UnitManager.walkablePositions[currentIndex];
         animator.SetBool("isWalking", true);
-        Speed = speed;
         t = 0;
         currentIndex = 0;
     }
 
-    void Update()
+    public void Move()
     {
         if (transform.position == UnitManager.walkablePositions[UnitManager.walkablePositions.Count - 1])
             gameObject.SetActive(false);
 
-        t += Time.deltaTime * speed;
+        t += Time.deltaTime * Speed;
 
-        if(UnitManager.walkablePositions.Count > currentIndex + 1)
+        if (UnitManager.walkablePositions.Count > currentIndex + 1)
         {
             transform.position = Vector3.Lerp(UnitManager.walkablePositions[currentIndex], UnitManager.walkablePositions[currentIndex + 1], t);
 
@@ -42,8 +40,6 @@ public class PathAgent : MonoBehaviour
             {
                 currentIndex++;
                 t = 0;
-                //Spawn next enemy in line
-                //Send out event that tells another unit to activate
             }
         }
     }

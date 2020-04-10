@@ -4,9 +4,8 @@ using UnityEngine;
 using AI;
 using Tools;
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : MonoBehaviour, ISpawner
 {
-    static List<Vector2Int> walkableTiles;
     //Change this to a non static / private variable
     public static List<Vector3> walkablePositions = new List<Vector3>();
     MapManager mapManager;
@@ -22,6 +21,8 @@ public class UnitManager : MonoBehaviour
     float timeUntillNextSpawn;
     float t = 0;
     int index = 0;
+
+    public List<Vector2Int> walkableTiles { get; set; }
 
     void Start()
     {
@@ -47,13 +48,18 @@ public class UnitManager : MonoBehaviour
         largeUnitPool = new GameObjectPool(poolSize, largeUnit, poolSize, new GameObject("Large Units").transform);
 
         GameObject instance = smallUnitPool.Rent(true);
-        timeUntillNextSpawn = instance.GetComponent<PathAgent>().Speed;
+        timeUntillNextSpawn = instance.GetComponent<PathAgent>().Speed * 0.5f;
         mapManager.WaveData[0].x -= 1;
         instance.transform.position = walkablePositions[0];
     }
 
     // Update is called once per frame
     void Update()
+    {
+        Spawn();
+    }
+
+    public void Spawn()
     {
         t += timeUntillNextSpawn * Time.deltaTime;
         if (t > 2)
@@ -64,23 +70,18 @@ public class UnitManager : MonoBehaviour
                 mapManager.WaveData[index].x -= 1;
                 instance.transform.position = walkablePositions[0];
             }
-            else if(mapManager.WaveData[index].y > 0)
+            else if (mapManager.WaveData[index].y > 0)
             {
                 GameObject instance = largeUnitPool.Rent(true);
                 mapManager.WaveData[index].y -= 1;
                 instance.transform.position = walkablePositions[0];
             }
-            else // Current wave is finished spawning. Add a wait time and indication that there will be another round comming
+            else if (index < mapManager.WaveData.Length - 1) // Current wave is finished spawning. Add a wait time and indication that there will be another round comming
             {
                 index++;
                 //If index > WaveData.Count all waves have finished
             }
             t = 0;
         }
-    }
-
-    void Spawn()
-    {
-
     }
 }
