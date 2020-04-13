@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08a0b863e4de8ec40a26b9b20c0ed665, type: 3}
-  m_Name: LargeUnit
+  m_Name: Tower1Unit
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 0}
-  moveSpeed: 5
-  maxHp: 6
+  unitPrefab: {fileID: 225077031991834588, guid: e2865f010891d4cda90f443c0fe28d13,
+    type: 3}
+  moveSpeed: 0
+  maxHp: 0
   damage: 2

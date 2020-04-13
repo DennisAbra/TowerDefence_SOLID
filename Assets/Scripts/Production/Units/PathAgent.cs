@@ -14,13 +14,9 @@ public class PathAgent : MonoBehaviour, IMover, IReuseable
 
     public void Reset()
     {
-        if (!animator)
-        {
-            animator = GetComponent<Animator>();
-        }
         if (UnitManager.walkablePositions != null)
             transform.position = UnitManager.walkablePositions[currentIndex];
-        animator.SetBool("isWalking", true);
+
         t = 0;
         currentIndex = 0;
     }

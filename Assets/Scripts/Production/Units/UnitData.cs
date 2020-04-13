@@ -10,7 +10,7 @@ public class UnitData : ScriptableObject
     [SerializeField] int maxHp;
     [SerializeField] int damage;
 
-    public GameObject UnitPrefab { get => unitPrefab; }
+    public GameObject Prefab { get => unitPrefab; }
     public float MoveSpeed { get => moveSpeed;}
     public int MaxHp { get => maxHp; }
     public int Damage { get => damage; }
