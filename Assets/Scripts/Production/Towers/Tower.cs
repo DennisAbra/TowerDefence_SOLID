@@ -2,14 +2,14 @@
 using Tools;
 using System.Collections.Generic;
 
-public class Tower : MonoBehaviour, IDamageDealer, ITower
+public class Tower : MonoBehaviour, IDamageDealer
 {
     [SerializeField] private UnitData data;
     [SerializeField] private uint bulletPoolSize;
 
     private GameObjectPool bulletPool;
-    private bool isAiming = false;
     private GameObject target;
+    private bool lostTarget = true;
 
 
     private void Start()
@@ -21,13 +21,15 @@ public class Tower : MonoBehaviour, IDamageDealer, ITower
     {
         thingToDamage.TakeDamage(data.Damage);
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
-        if (other.TryGetComponent<IDamagable>(out IDamagable currentTarget) && !isAiming)
+        if (col.TryGetComponent<IDamagable>(out IDamagable currentTarget))
         {
-            target = other.gameObject;
-            isAiming = true;
+            if (lostTarget)
+            {
+                target = col.gameObject;
+                Debug.Log("GOT HERE");
+            }
         }
     }
 
@@ -35,9 +37,13 @@ public class Tower : MonoBehaviour, IDamageDealer, ITower
     {
         if (other.gameObject == target)
         {
-            isAiming = false;
-            target = null;
+            lostTarget = true;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, target.transform.position);
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IShooter
+public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed;
     public float ProjectileSpeed { get; set; }
@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour, IShooter
         ProjectileSpeed = bulletSpeed; 
         t = 0;
     }
+
 
     public void Shoot(Vector3 target)
     {

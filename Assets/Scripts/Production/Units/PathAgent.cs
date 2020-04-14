@@ -23,9 +23,6 @@ public class PathAgent : MonoBehaviour, IMover, IReuseable
 
     public void Move()
     {
-        if (transform.position == UnitManager.walkablePositions[UnitManager.walkablePositions.Count - 1])
-            gameObject.SetActive(false);
-
         t += Time.deltaTime * Speed;
 
         if (UnitManager.walkablePositions.Count > currentIndex + 1)
@@ -40,4 +37,12 @@ public class PathAgent : MonoBehaviour, IMover, IReuseable
         }
     }
 
+    public bool IsOnEndTile()
+    {
+        if (transform.position == UnitManager.walkablePositions[UnitManager.walkablePositions.Count - 1])
+        {
+            return true;
+        }
+        else return false;
+    }
 }

@@ -7,6 +7,7 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
 {
     [SerializeField] UnitData unitData;
     Animator animator;
+    Player player;
     public int CurrentHealth { get; set; }
 
     private void OnEnable()
@@ -15,6 +16,12 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
         {
             animator = GetComponent<Animator>();
         }
+
+        if(player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+
         Reset();
         CurrentHealth = unitData.MaxHp;
         Speed = unitData.MoveSpeed;
@@ -24,6 +31,11 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
     void Update()
     {
         Move();
+        if(IsOnEndTile())
+        {
+            DealDamage(player);
+            gameObject.SetActive(false);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -31,7 +43,7 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
         CurrentHealth -= damage;
         animator.SetTrigger("Damaged");
 
-        if (CurrentHealth < 1)
+        if (CurrentHealth <= 0)
         {
             //DIE
             animator.SetTrigger("Killed");

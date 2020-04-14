@@ -8,7 +8,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Tile[] tiles;
     [SerializeField] TextAsset mapToRead;
     [SerializeField] MapReader mapReader;
-    [SerializeField] Transform parent;
+    Transform parent;
     MapSpawner spawner;
 
     int[,] map;

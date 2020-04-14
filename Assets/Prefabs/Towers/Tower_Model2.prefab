@@ -294,7 +294,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5719485938209910767}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 4
@@ -313,7 +313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7cff3e582d5080448b9c000d8f5eb5eb, type: 2}
   bulletPoolSize: 10
-  travelTime: 10
 --- !u!1 &7391422965515881056
 GameObject:
   m_ObjectHideFlags: 0
