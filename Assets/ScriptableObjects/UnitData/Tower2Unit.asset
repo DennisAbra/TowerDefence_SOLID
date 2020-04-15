@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a0b863e4de8ec40a26b9b20c0ed665, type: 3}
   m_Name: Tower2Unit
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 0}
+  unitPrefab: {fileID: 225077031991834588, guid: 9882ad055d9a5844fb69e469b1aac54c,
+    type: 3}
   moveSpeed: 0
   maxHp: 0
-  damage: 0
+  damage: 2

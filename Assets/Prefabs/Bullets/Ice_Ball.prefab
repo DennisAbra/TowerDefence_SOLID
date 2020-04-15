@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 225077031991834589}
   - component: {fileID: 2081710142678667322}
   m_Layer: 0
-  m_Name: Cannon_Ball
+  m_Name: Ice_Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   bulletSpeed: 4
   explosionRadius: 1
   damage: 2
-  type: 1
+  type: 0
   mask:
     serializedVersion: 2
     m_Bits: 512

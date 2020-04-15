@@ -627,9 +627,9 @@ GameObject:
   - component: {fileID: 3612414258052102535}
   - component: {fileID: -8099919573778539862}
   - component: {fileID: 5553416247562127851}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_ModelLarge
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -681,6 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: 3dfbf926b1d4b5647989fa6a6fa8a338, type: 2}
+  isSlowed: 0
 --- !u!54 &-8099919573778539862
 Rigidbody:
   m_ObjectHideFlags: 0

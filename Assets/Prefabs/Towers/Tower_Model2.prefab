@@ -311,8 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ad71aa9d2cae947bafd6a839833df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 7cff3e582d5080448b9c000d8f5eb5eb, type: 2}
+  data: {fileID: 11400000, guid: 463b4f16f1175d54282d183cec21ab7a, type: 2}
   bulletPoolSize: 10
+  timeUntillNextShot: 1
+  timeFraction: 2
 --- !u!1 &7391422965515881056
 GameObject:
   m_ObjectHideFlags: 0

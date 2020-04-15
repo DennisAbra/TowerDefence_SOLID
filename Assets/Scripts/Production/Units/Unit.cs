@@ -9,6 +9,9 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
     Animator animator;
     Player player;
     public int CurrentHealth { get; set; }
+    float slowedSpeed;
+    public bool isSlowed = false;
+    float t = 0;
 
     private void OnEnable()
     {
@@ -25,7 +28,9 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
         Reset();
         CurrentHealth = unitData.MaxHp;
         Speed = unitData.MoveSpeed;
+        slowedSpeed = Speed * 0.25f;
         animator.SetBool("isWalking", true);
+        isSlowed = false; 
     }
 
     void Update()
@@ -35,6 +40,17 @@ public class Unit : PathAgent, IDamageDealer, IDamagable
         {
             DealDamage(player);
             gameObject.SetActive(false);
+        }
+
+        if(isSlowed)
+        {
+            Speed = slowedSpeed;
+            t += Time.deltaTime;
+            if(t > 1)
+            {
+                isSlowed = false;
+                Speed = unitData.MoveSpeed;
+            }
         }
     }
 

@@ -13,6 +13,7 @@ public class PlayerHealthListener : MonoBehaviour, IObserver<int>
     {
         m_Player = FindObjectOfType<Player>();
         m_Subscription = m_Player.Health.Subscribe(this);
+        UpdateTextField(m_Player.Health.Value);
     }
 
     void UpdateTextField(int playerHealth)
