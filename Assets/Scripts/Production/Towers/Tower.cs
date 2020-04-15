@@ -17,6 +17,16 @@ public class Tower : MonoBehaviour, IDamageDealer
         bulletPool = new GameObjectPool(bulletPoolSize, data.Prefab, bulletPoolSize, new GameObject(gameObject.name + "'s BulletPool").transform);
     }
 
+    private void Update()
+    {
+        if (target)
+        {
+            if (target.gameObject.activeSelf == false)
+                target = null;
+
+        }
+    }
+
     public void DealDamage(IDamagable thingToDamage)
     {
         thingToDamage.TakeDamage(data.Damage);
@@ -37,13 +47,15 @@ public class Tower : MonoBehaviour, IDamageDealer
     {
         if (other.gameObject == target)
         {
+            target = null;
             lostTarget = true;
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, target.transform.position);
+        if (target)
+            Gizmos.DrawLine(transform.position, target.transform.position);
     }
 
 }
